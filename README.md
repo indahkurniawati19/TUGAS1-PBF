@@ -241,7 +241,7 @@ tampilannya :
 
 ![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/c88bc0b8-2217-4ccc-98d8-af6e5aefc04c)
 
-#### **News Section**
+#### **News Section**
 1. Buat data base ci4tutorial
 <img width="446" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/acd6d8cb-cdc5-48c1-8d4b-046f0f34df03">
 Lalu create
@@ -477,3 +477,186 @@ class News extends BaseController
 ```
 13. Mengakses tampilan berita yang dibuat dengan mengetikan localhost:8080/news
 Maka akan muncul tampilan seperti ini :
+![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/edbcc824-604f-40a1-9ee8-726af95d3da8)
+
+## Create News Items
+#### **Aktifkan Filter CSRF**
+Buka file **app/Config/Filters.php** dan perbarui $methods properti seperti berikut:
+```php
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Filters extends BaseConfig
+{
+    // ... ini
+
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+
+    // ...
+}
+```
+#### **Menambahkan Routing Rules**
+Menambahkan routing rule tambahan ke file **app/Config/Routes.php** .
+```php
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes->get('/', 'Home::index');
+
+use App\Controllers\Pages;
+use App\Controllers\News; // Tambah baris ini
+
+$routes->get('news', [News::class, 'index']);           // Tambah baris ini
+
+$routes->get('news/new', [News::class, 'new']); // Tambah baris ini (poin create News items)
+$routes->post('news', [News::class, 'create']); // Tambah baris ini (poin create News items)
+
+$routes->get('news/(:segment)', [News::class, 'show']); // Tambah baris ini
+
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+Ini mengkonfigurasi filter CSRF untuk diaktifkan untuk semua permintaan POST 
+#### **Membuat Formulir **
+buat file baru **create.php** pada folder **app/Views/news**  lalu pada **app/Views/news/create.php**, Tambahkan kode berikut :
+```php
+<h2><?= esc($title) ?></h2>
+
+<?= session()->getFlashdata('error') ?>
+<?= validation_list_errors() ?>
+
+<form action="/news" method="post">
+    <?= csrf_field() ?>
+
+    <label for="title">Title</label>
+    <input type="input" name="title" value="<?= set_value('title') ?>">
+    <br>
+
+    <label for="body">Text</label>
+    <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+    <br>
+
+    <input type="submit" name="submit" value="Create news item">
+</form>
+```
+### **Membuat News Controller**
+**Tambahkan **`News::new()`** pada `app/controllers/News.php`untuk Menampilkan Formulir.Pertama, buatlah metode untuk menampilkan form HTML yang telah buat.**
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+    //Tambahkan mulai dari baris bawah ini
+    public function new()
+    {
+        helper('form');
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/create')
+            . view('templates/footer');
+    }
+}
+```
+**Tambahkan News::create() pada app/controllers/News.php untuk menambahkan Items Berita**
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+		// Dari Poin 5 pembahasan Create News Items (Bangun aplikasi pertama Anda)
+    public function create()
+    {
+        helper('form'); // Memanggil helper form
+
+        $data = $this->request->getPost(['title', 'body']); // Mengambil data dari form
+
+        // Mengecek apakah data yang dikirimkan memenuhi aturan validasi.
+        if (!$this->validateData($data, [
+            'title' => 'required|max_length[255]|min_length[3]', // Judul harus ada, maksimal 255 karakter, minimal 3 karakter
+            'body'  => 'required|max_length[5000]|min_length[10]', // Isi berita harus ada, maksimal 5000 karakter, minimal 10 karakter
+        ])) {
+            // Jika validasi gagal, kembali ke form.
+            return $this->new();
+        }
+
+        // Mengambil data yang telah divalidasi.
+        $post = $this->validator->getValidated();
+
+        $model = model(NewsModel::class); // Membuat instance dari NewsModel
+
+        // Menyimpan data ke dalam database
+        $model->save([
+            'title' => $post['title'], // Menyimpan judul
+            'description'  => url_title($post['title'], '-', true), // Membuat deskripsi dari judul
+            'body'  => $post['body'], // Menyimpan isi berita
+        ]);
+
+        // Menampilkan halaman sukses setelah data berhasil disimpan
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/success')
+            . view('templates/footer');
+    }
+    //...
+}
+```
+### **Buat tampilan di app/Views/news/success.php dan tulis pesan sukses.**
+```php
+<p>News item created successfully.</p>
+```
+### **Edit NewsModel → app/Models/NewsModel.php untuk memberikannya daftar bidang yang dapat diperbarui di $allowedFields properti.**
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+// Kelas NewsModel mewarisi kelas Model(defult) dari CodeIgniter
+class NewsModel extends Model
+{
+    // Variabel $table digunakan untuk mendefinisikan tabel yang digunakan model
+    protected $table = 'news';
+
+    // Variabel $allowedFields mendefinisikan kolom apa saja yang bisa diisi dalam tabel
+    // Ini adalah bagian dari fitur mass assignment protection di CodeIgniter
+    //Pembahasan poin 7 pada Create News Items (Bangun aplikasi pertama Anda)
+    protected $allowedFields = ['title', 'slug', 'body'];
+    //...
+
+    // Fungsi getNews digunakan untuk mengambil data berita
+    // Jika parameter $slug bernilai false, maka fungsi akan mengembalikan semua berita
+    // Jika parameter $slug memiliki nilai, maka fungsi akan mencari berita dengan deskripsi yang sesuai
+    public function getNews($slug= false)
+    {
+        if ($slug === false) {
+            return $this->findAll();
+        }
+
+        return $this->where(['slug' => $slug])->first();
+    }
+}
+```
+### **Membuat item berita membuka pada alamat localhost:8080/news/new**
+
