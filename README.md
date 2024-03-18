@@ -94,7 +94,7 @@ use App\Controllers\Pages;
 $routes->get('pages', [Pages::class, 'index']);
 $routes->get('(:segment)', [Pages::class, 'view']);
 ```
-#### **Create Pages Controller **
+#### **Create Pages Controller**
 2. Buat file Pages controller di app/Controllers/Pages.php dengan kode berikut :
 ```php
 <?php
@@ -233,7 +233,15 @@ class Pages extends BaseController
 **Running the app** 
 5. Masuk ke URL : http://localhost:8080/home 
 tampilan yang di hasilkan :
+
 ![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/1babf438-25ec-46fd-b530-b7feb503aab2)
 
 6. Masuk ke URL : http://localhost:8080/about
+tampilannya :
+
+![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/c88bc0b8-2217-4ccc-98d8-af6e5aefc04c)
+
+#### **News Section**
+1. Buat data base ci4tutorial
+
 
