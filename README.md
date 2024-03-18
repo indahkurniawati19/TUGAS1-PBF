@@ -695,4 +695,12 @@ Controller merupakan bagian instruksi aksi yang menghubungkan model dan view, ja
 ```php
 php spark namespaces
 ```
+### **Service**
+Berada pada direktori **App\Config\Service.php**. Berfungsi untuk menyatukan instance dari kelas yang digunakan secara global, seperti timer, dan logger.
+### **Factories**
+Factories atau Pabrik adalah alat yang memungkinkan Anda membuat objek atau instance dari kelas-kelas tertentu secara dinamis
+**Menghapus file cache**
+```php
+php spark cache:clear
+```
 
