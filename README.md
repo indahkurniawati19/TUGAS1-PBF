@@ -19,6 +19,8 @@ Diperlukan PHP minimal versi 7.4 atau lebih baru.
 ```shell
 $ composer -v
 ```
+<img width="620" alt="Screenshot 2024-03-18 101440" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/0f2fa79c-8580-42cc-aba9-e2f97d499dfe">
+
 2. Buka folder root yang akan digunakan untuk menyimpan Folder CodeIgniter, lalu buka CMD lalu ketik
     <img width="311" alt="Screenshot 2024-03-18 095234" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/8343a220-8d85-4c85-8fda-5227b7a06f77">
     
@@ -31,3 +33,14 @@ $ composer create-project codeigniter4/appstarter nama-project
 $ cd nama-root
 $ php spark serve
 ```
+#### **Installation Manual**
+1. Install Manual CodeIgniter4 melalui web resminya, dan hasil downloadnya berbentuk zip 
+[CodeIgniter 4.](https://www.codeigniter.com/download)
+2. Lalu Ekstrak folder CodeIgniter yang sudah di download ke direktori root web server pada penyimpanan, Jika menggunakan laragon maka exctract pada C:\laragon\www
+4. Jalankan server dengan masuk ke dalam root project yang terdapat folder CI → code editor (Visual Studio Code) → Terminal atau masuk ke Command Prompt → ketik :
+```shell
+$ cd nama-root
+$ php spark serve
+```
+5. Perintah diatas akan menjalankan Codeigniter 4 di port 8080. Proses running ini akan terus berjalan sampai jika ingin memberhentikan maka menekan tombol CTRL+C 
+Untuk melihat hasilnya, silahkan buka browser dan arahkan ke http://localhost:8080/.
