@@ -659,4 +659,4 @@ class NewsModel extends Model
 }
 ```
 ### **Membuat item berita membuka pada alamat localhost:8080/news/new**
-
+<img width="328" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/1117ec77-fd0e-4fdb-9ece-25c11c55201b">
