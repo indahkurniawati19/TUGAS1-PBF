@@ -17,6 +17,7 @@ Diperlukan PHP minimal versi 7.4 atau lebih baru.
 #### **Installation Composer**
 1. Buka folder root yang akan digunakan untuk menyimpan Folder CodeIgniter, klik kanan lalu buka folder tersebut lewat Terminal. 
    Ketikkan :
+   ![Alt text](Screenshot 2024-03-18 095234.png)
 ```shell
 $ composer create-project codeigniter4/appstarter nama-project
 ```
