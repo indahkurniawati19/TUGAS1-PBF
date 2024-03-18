@@ -74,6 +74,68 @@ konfigurasi bisa dilakukan dengan **app/Config/App.php** atau menggunakan **.env
    ```
 ## Bangun Aplikasi Pertama
 #### **Halaman Erorr**
-Buka app/Controllers/Home.php dan ubah beberapa baris untuk menghasilkan kesalahan (menghapus titik koma atau kurung kurawal).
+Buka **app/Controllers/Home.php** dan ubah beberapa baris untuk menghasilkan kesalahan (menghapus titik koma atau kurung kurawal).
+<img width="926" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/19019677-0afb-49a8-93ea-ebc1b8bb68f5">
+#### **Static Page**
+#### **Setting Routing Rules**
+1. Buka File routes yang ada di **app/Config/Routes.php.**, Lalu menambahkan baris berikut, untuk meyambungkan dengan Pages.php yang di Controllers
+```php
+<?php
 
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes->get('/', 'Home::index');
+
+//Tambahkan Baris Berikut
+use App\Controllers\Pages;
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+#### **Create Pages Controller **
+2. Buat file Pages controller di app/Controllers/Pages.php dengan kode berikut :
+```php
+<?php
+
+namespace App\Controllers;
+
+class Pages extends BaseController
+{
+    public function index()
+    {
+        return view('welcome_message');
+    }
+
+    public function view($page = 'home')
+    {
+        // ...
+    }
+}
+```
+#### **Create Views**
+3. Buat Views
+Tambahkan folder baru **templates** dan file **header.php** didalamnya, pada folder **app/Views.**
+Lalu isikan, kode berikut pada header.php :
+```php
+<!doctype html>
+<html>
+
+<head>
+    <title>CodeIgniter Tutorial</title>
+</head>
+<body>
+
+    <h1><?= esc($title) ?></h1>
+    <!-- esc fungsi global yang disediakan oleh CodeIgniter untuk membantu mencegah serangan XSS -->
+```
+Tambahkan **file** footer di **app/Views/templates**, Lalu tambahkan Kode berikut :
+```php
+<footer>ini adalah footer</footer>
+<em>&copy; 2024</em>
+</body>
+
+</html>
+```
 
