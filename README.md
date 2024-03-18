@@ -660,3 +660,39 @@ class NewsModel extends Model
 ```
 ### **Membuat item berita membuka pada alamat localhost:8080/news/new**
 <img width="328" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/1117ec77-fd0e-4fdb-9ece-25c11c55201b">
+<img width="333" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/0c549907-e474-4fcb-87cb-1d19ec14d660">
+
+## CodeIgniter4 Overview
+### **STRUKTUR APLIKASI**
+Struktur folder pada Ci :
+• Folder App : adalah folder inti pada ci 
+• Folder Public : tempat menyimpan asset,  terdapat htacsess digunakan untuk membuat preaty url  agar url bersih tanpa ada nama file nya, menggunakan fiture modrewrite
+Ada file favicon untuk membuat icon disebelah tab pada website. File index.php dimisalkan  file boostrap, atau dengan kata lain suatu file yang membawa file lainnya, atau ci berwal dari file ini, File robots.txt biasanya digunakan untuk sherce engin. 
+• Folder Test : digunakan ketika aplikasi kita menjalankan testing 
+• Folder Vendor : Folder tempat untuk menyimpan dependency pada aplikasi yang dibuat, dependency tersebut di kelola pada file composer.json
+•Folder Writeadble : Tempat untuk menyimpan file sementara, file log, dan file cache yang dapat ditulis oleh aplikasi
+
+**app/**
+    Config/         Menyimpan file konfigurasi
+    Controllers/    menentukan alur program
+    Database/       Menyimpan file database migrasi dan seed basis data
+    Filters/        Menyimpan kelas filter yang dapat dijalankan sebelum dan setelah controller
+    Helpers/        Helpers menyimpan kumpulan fungsi mandiri
+    Language/       Dukungan multi bahasa membaca string bahasa dari sini
+    Libraries/      Kelas-kelas yang berguna yang tidak cocok dalam kategori lainnya
+    Models/         Models bekerja dengan database untuk merepresentasikan entitas bisnis
+    ThirdParty/     libary pihak ke 3 yang di gunakan di aplikasi 
+    Views/          Views tempat untuk interface yang di tampilkan ke pengguna
+### **MVC**
+•Model
+Model merupakan bagian penanganan yang berhubungan atau manipulasi data dengan database, misal mengambil data dari database, dan proses crud atau intruksi yang berhubungan dengan database diletakan di dalam model.
+•View
+View merupakan bagian penanganan interface atau antarmuka web, yang muncul kepada user, dengan memisahkan controller dengan model dapat memudahkan programmer untuk melakukan suatu pengembangan web pada tampilan halaman suatu website.
+•Controller
+Controller merupakan bagian instruksi aksi yang menghubungkan model dan view, jadi controller ini kumpulan instruksi aksi yang berfungsi sebagai jembatan dari model dan view.
+### **Auto Loading**
+**Memeriksa konfigurasi Namespace**
+```php
+php spark namespaces
+```
+
