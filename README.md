@@ -35,6 +35,8 @@ perintah di atas memerlukan koneksi internet pada saat install, maka dari itu ce
 $ cd nama-root
 $ php spark serve
 ```
+4. Pada saat dijalankan maka tampilannya seperti
+   ![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/a0d04955-619c-4d24-a01e-037b5802625f)
 
 #### **Installation Manual**
 1. Install Manual CodeIgniter4 melalui web resminya, dan hasil downloadnya berbentuk zip 
@@ -45,5 +47,33 @@ $ php spark serve
 $ cd nama-root
 $ php spark serve
 ```
-5. Perintah diatas akan menjalankan Codeigniter 4 di port 8080. Proses running ini akan terus berjalan sampai jika ingin memberhentikan maka menekan tombol CTRL+C 
+5. Perintah diatas akan menjalankan Codeigniter 4 di port 8080. Proses running ini akan terus berjalan sampai jika ingin memberhentikan maka menekan tombol CTRL+C,
 Untuk melihat hasilnya, silahkan buka browser dan arahkan ke http://localhost:8080/.
+![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/a0d04955-619c-4d24-a01e-037b5802625f)
+
+#### **Konfigurasi Awal**
+konfigurasi bisa dilakukan dengan **app/Config/App.php** atau menggunakan **.env**
+1. Menetapkan base konfigurasi $baseURL (App.php) atau app.baseURL (.env)
+   ```php
+    public string $baseURL = 'http://localhost:8080/'; //Pastikan untuk menambahkan slash(/) di akhir jika menggunakan (App.php)
+    app.baseURL = 'http://localhost/' //Jika menggunakan (.env)
+   ```
+2. Menentukan halaman index
+   Jika tidak ingin menyertakan **index.php** di URI setel `$indexPage`ke `''` pada **`app/Config/App.php`**.
+   ```php
+   pada awalnya seperti ini :
+   public string $indexPage = 'index.php';
+   di ubah menjadi :
+   public string $indexPage = '';
+   ```
+#### **Konfigurasi Data Base**
+1. Mengatur ke Mode Development
+   setel `CI_ENVIRONMENT`ke `development` dalam file **.env** untuk memanfaatkan alat debugging.
+   ```php
+   # CI_ENVIRONMENT = production -> # CI_ENVIRONMENT = development
+   ```
+## Bangun Aplikasi Pertama
+#### **Halaman Erorr**
+Buka app/Controllers/Home.php dan ubah beberapa baris untuk menghasilkan kesalahan (menghapus titik koma atau kurung kurawal).
+
+
