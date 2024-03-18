@@ -233,4 +233,7 @@ class Pages extends BaseController
 **Running the app** 
 5. Masuk ke URL : http://localhost:8080/home 
 tampilan yang di hasilkan :
+![image](https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/1babf438-25ec-46fd-b530-b7feb503aab2)
+
+6. Masuk ke URL : http://localhost:8080/about
 
