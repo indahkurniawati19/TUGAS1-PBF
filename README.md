@@ -15,13 +15,18 @@ CodeIgniter adalah salah satu FreamWork yang ada di PHP yang bersifat Open Sourc
 #### Syarat Menginstall CodeIgniter
 Diperlukan PHP minimal versi 7.4 atau lebih baru.
 #### **Installation Composer**
-1. Buka folder root yang akan digunakan untuk menyimpan Folder CodeIgniter, klik kanan lalu buka folder tersebut lewat Terminal. 
-   Ketikkan :
-   ![Alt text](Screenshot 2024-03-18 095234.png)
+   1.Cek apakah ada composer atau tidak dengan perintah :
+```shell
+$ composer -v
+```
+2. Buka folder root yang akan digunakan untuk menyimpan Folder CodeIgniter, lalu buka CMD lalu ketik
+    <img width="311" alt="Screenshot 2024-03-18 095234" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/8343a220-8d85-4c85-8fda-5227b7a06f77">
+    
+    atau bisa klik kanan lalu buka folder tersebut lewat Terminal. dan Ketikkan :
 ```shell
 $ composer create-project codeigniter4/appstarter nama-project
 ```
-2. Jalankan server
+3. Jalankan server
 ```shell
 $ cd nama-root
 $ php spark serve
