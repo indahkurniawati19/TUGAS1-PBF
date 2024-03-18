@@ -138,4 +138,99 @@ Tambahkan **file** footer di **app/Views/templates**, Lalu tambahkan Kode beriku
 
 </html>
 ```
+#### **Adding Logic to the Controller**
+4. Tambahkan folder **pages** di **app/Views/** lalu tambahkan dua file bernama **home.php** dan **about.php** pada **app/Views/pages/**.
+Pada **home.php** tambahkan kode berikut :
+```php
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+
+<body>
+    <h1>Selamat Datang Di Home Page</h1>
+</body>
+
+</html>
+```
+Pada **about.php** tambahkan kode berikut :
+```php
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Page</title>
+</head>
+
+<body>
+    <h1>Tetang saya</h1>
+    <p>Ini adalah halaman tentang situs web.</p>
+    <p>Nama saya Indah Kurniawati Salongan</p>
+</body>
+
+</html>
+```
+**Pada file app/controllers/Pages.php** 
+Yang sebelumnya seperti ini :
+```php
+<?php
+
+namespace App\Controllers;
+
+class Pages extends BaseController
+{
+    public function index()
+    {
+        return view('welcome_message');
+    }
+
+    public function view($page = 'home')
+    {
+        // ...
+```
+Lengkapi menjadi seperti ini :
+```php
+<?php
+
+namespace App\Controllers;
+
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class Pages extends BaseController
+{
+		//untuk menampilkan index() welcome_message
+    public function index()
+    {
+        // Menampilkan halaman utama (welcome_message.php)
+        return view('welcome_message');
+    }
+
+    public function view($page = 'home')
+    {
+
+        // Mengecek apakah halaman yang diminta ada
+        if (!is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Jika tidak ada, lempar PageNotFoundException
+            throw new PageNotFoundException($page);
+        }
+
+        // Mengatur judul halaman berdasarkan nama halaman
+        $data['title'] = ucfirst($page); // Kapitalkan huruf pertama
+
+        // Memuat template header, halaman statis (home, about), dan footer
+        return view('templates/header', $data)
+            . view('pages/' . $page, $data)
+            . view('templates/footer');
+    }
+}
+```
+**Running the app** 
+5. Masuk ke URL : http://localhost:8080/home 
+tampilan yang di hasilkan :
 
