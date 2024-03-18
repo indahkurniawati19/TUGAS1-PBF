@@ -243,5 +243,174 @@ tampilannya :
 
 #### **News Section**
 1. Buat data base ci4tutorial
+<img width="446" alt="image" src="https://github.com/indahkurniawati19/TUGAS1-PBF/assets/134476013/acd6d8cb-cdc5-48c1-8d4b-046f0f34df03">
+Lalu create
+2. Membuat table dengan perintah SQL
 
+```php
+CREATE TABLE news (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(128) NOT NULL,
+    slug VARCHAR(128) NOT NULL,
+    body TEXT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE slug (slug)
+);
+```
+3. Insert data ke dalam table
+```php
+INSERT INTO news (title, slug , body) VALUES 
+('Pembukaan Cafe!!', 'Pembukaan-Cafe-YOLIS', 'Cafe ini di buka pada tanggal 12/3/2024 ,Di kota Jakarta, cafe ini memiliki banyak pengunjung pada saat Grand Opening di jakarta kemarin.'),
+('Konser Music di GBK!', 'Konser-Penyanyi-Terkenal-The-1975', 'Konser ini mendatangkan audience yang cukup banyak ke GBK untuk menonton band kesayangannya yaitu The 1975 .'),
+('Buku BestSeller!', 'Buku-buku-BestSeller-di-indonesia-tahun-2023', 'Buku-buku BestSeller itu antara lain Laut Bercerita, Filosofi Teras, Automic Habbit .');
+```
+4. Menghubungkan ke database
+Hubungkan ke Database pada file **.env** hilangkan comment (#) dan ganti database yang sesuai
+```php
+ database.default.hostname = localhost
+ database.default.database = ci4tutorial
+ database.default.username = root
+ database.default.password = 
+ database.default.DBDriver = MySQLi
+ database.default.DBPrefix =
+ database.default.port = 3306
+```
+5. Membuat Model News Buka direktori **app/Models** setelah itu buat file baru bernama **NewsModel.php** dan tambahkan kode berikut ini :
+```php
+<?php
 
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class NewsModel extends Model
+{
+    protected $table = 'news';
+}
+```
+6. Menambahkan Method **NewsModel::getNews()** pada **app/Models**
+dari :
+```php
+    public function getNews($slug = false)
+    {
+        if ($slug === false) {
+            return $this->findAll();
+        }
+
+        return $this->where(['slug' => $slug])->first();
+    }
+```
+menjadi seperti :
+
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+// Kelas NewsModel mewarisi kelas Model(defult) dari CodeIgniter
+class NewsModel extends Model
+{
+    // Variabel $table digunakan untuk mendefinisikan tabel yang digunakan model
+    protected $table = 'news';
+
+    // Variabel $allowedFields mendefinisikan kolom apa saja yang bisa diisi dalam tabel
+    // Ini adalah bagian dari fitur mass assignment protection di CodeIgniter
+    //Pembahasan poin 7 pada Create News Items (Bangun aplikasi pertama Anda)
+    protected $allowedFields = ['title', 'slug', 'body'];
+    //...
+
+    // Fungsi getNews digunakan untuk mengambil data berita
+    // Jika parameter $slug bernilai false, maka fungsi akan mengembalikan semua berita
+    // Jika parameter $slug memiliki nilai, maka fungsi akan mencari berita dengan deskripsi yang sesuai
+    public function getNews($slug= false)
+    {
+        if ($slug === false) {
+            return $this->findAll();
+        }
+
+        return $this->where(['slug' => $slug])->first();
+    }
+}
+```
+7. Menambahkan Routing Rules
+Ubah file **app/Config/Routes.php** , sehingga terlihat seperti berikut:
+```php
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes->get('/', 'Home::index');
+
+use App\Controllers\Pages;
+use App\Controllers\News; // Tambah baris ini
+
+$routes->get('news', [News::class, 'index']);           // Tambah baris ini
+$routes->get('news/(:segment)', [News::class, 'show']); // Tambah baris ini
+
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+8. Menambahkan Create News Controller
+Tambahkan News Controller pada **app/Controllers/News.php**,Lalu tambahkan kode berikut :
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+
+class News extends BaseController
+{
+    public function index()
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews();
+    }
+
+    public function show($slug = null)
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews($slug);
+    }
+}
+```
+9. Lengkapi Method News::index() yang ada pada **app/Controllers/News.php**
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException; //baru
+
+class News extends BaseController
+{
+    public function index()
+    {
+        $model = model(NewsModel::class);
+
+        $data = [
+            'news'  => $model->getNews(),
+            'title' => 'Berita',
+        ];
+
+        return view('templates/header', $data)
+            . view('news/index')
+            . view('templates/footer');
+    }
+    //..
+    public function show($description= null)
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews($description);
+    }
+}
+```
