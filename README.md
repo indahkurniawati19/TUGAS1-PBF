@@ -28,11 +28,14 @@ $ composer -v
 ```shell
 $ composer create-project codeigniter4/appstarter nama-project
 ```
+perintah di atas memerlukan koneksi internet pada saat install, maka dari itu cepat atau lambat nya proses install di pengaruih dengan koneksi internet
+
 3. Jalankan server
 ```shell
 $ cd nama-root
 $ php spark serve
 ```
+
 #### **Installation Manual**
 1. Install Manual CodeIgniter4 melalui web resminya, dan hasil downloadnya berbentuk zip 
 [CodeIgniter 4.](https://www.codeigniter.com/download)
